@@ -1,0 +1,28 @@
+.video-player-section .container, .video-player-container {
+	width:100% !important;
+}
+
+.funimation-icon-logo, #funimation-logo {
+	display:none !important;
+}
+
+.container-fluid {
+	max-width:1920px !important;
+}
+
+#funimation-player > div {
+	background-color: #000;
+}
+
+.video-player-section {
+	background-color:transparent !important;
+}
+
+.video-player-container {
+	max-height:1080px;
+}
+
+/*@media (min-width: 450px)
+.funimation-control {
+    width: 60px;
+}*/

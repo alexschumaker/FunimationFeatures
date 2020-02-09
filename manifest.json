@@ -1,0 +1,26 @@
+{
+   "author": "Bitter Buffalo",
+   "browser_action": {
+      "default_icon": "images/icon_16.png"
+   },
+   "content_scripts": [ {
+      "all_frames": true,
+      "css": [ "styles/style.css" ],
+      "js": [ "scripts/script.js" ],
+      "matches": [ "https://www.funimation.com/shows/*", "http://www.funimation.com/shows/*", "https://www.funimation.com/player/*", "http://www.funimation.com/player/*" ]
+   } ],
+   "description": "This extension modifies the Funation.com video player so it fits the width of the content section better.",
+   "homepage_url": "http://www.myheartsabitterbuffalo.com/FuniFix",
+   "icons": {
+      "128": "images/icon_128.png",
+      "16": "images/icon_16.png",
+      "32": "images/icon_32.png",
+      "48": "images/icon_48.png"
+   },
+   "key": "MIIBIjANBgkqhkiG9w0BAQEFAAOCAQ8AMIIBCgKCAQEAmiqZ2kKV0sQqSsrfqMyTMdavRSjyGdTUypNgg638SPDGLWNe3Ia3Tg9/ukq4dadj/ndzMiivsgAAZCk91+MRKf7WPYSG10uAjJo4vkTL4y4yI1VN+bzXzRbOAUjpf2mFGS0XK7ZYuTwn0m5M7QzfwYZTEqlYmcM+cup9symtGDbpGm8Q6qdexoiHbHOuj8curfwENhzoaGFd1x5mL/AkQwDTjy76ZuXNNjAGrYxHIBE4lPKVGf9DrF8M9M9XFIweqOEp75Yh7OWgeyujLddkjRM67djVNjz7L2QgqmEIQunAP0+tzZj0Wp78uuY3p7QWZL+wbZXJkt80eCPYhIJIawIDAQAB",
+   "manifest_version": 2,
+   "name": "FunimationFix",
+   "update_url": "https://clients2.google.com/service/update2/crx",
+   "version": "0.2.1",
+   "web_accessible_resources": [ "scripts/inject.js", "scripts/inject2.js" ]
+}
