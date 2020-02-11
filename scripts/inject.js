@@ -66,6 +66,7 @@
 				if (!e.metaKey || e.shiftKey) {
 					videoPlayer.currentTime = videoPlayer.currentTime + 82
 				}
+				break;
 			case 32:  // spacebar
 				if (!playerFocus && (!e.metaKey || e.ctrlKey)) {
 					e.preventDefault();
