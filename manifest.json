@@ -9,7 +9,7 @@
       "js": [ "scripts/script.js" ],
       "matches": [ "https://www.funimation.com/shows/*", "http://www.funimation.com/shows/*", "https://www.funimation.com/player/*", "http://www.funimation.com/player/*" ]
    } ],
-   "description": "Successor to FunimationFix by Bitter Buffalo. Brings essential keybinds to Funimation's lackluster player, and DarkMode style to video pages.",
+   "description": "Successor to FunimationFix by Bitter Buffalo. Brings essential keybinds to Funimation's lackluster player, DarkMode style to video pages, and auto-resizing",
    "homepage_url": "http://www.cobblers.net/#software",
    "icons": {
       "128": "images/icon_128.png",
@@ -17,7 +17,6 @@
       "32": "images/icon_32.png",
       "48": "images/icon_48.png"
    },
-   "key": "MIIBIjANBgkqhkiG9w0BAQEFAAOCAQ8AMIIBCgKCAQEAmiqZ2kKV0sQqSsrfqMyTMdavRSjyGdTUypNgg638SPDGLWNe3Ia3Tg9/ukq4dadj/ndzMiivsgAAZCk91+MRKf7WPYSG10uAjJo4vkTL4y4yI1VN+bzXzRbOAUjpf2mFGS0XK7ZYuTwn0m5M7QzfwYZTEqlYmcM+cup9symtGDbpGm8Q6qdexoiHbHOuj8curfwENhzoaGFd1x5mL/AkQwDTjy76ZuXNNjAGrYxHIBE4lPKVGf9DrF8M9M9XFIweqOEp75Yh7OWgeyujLddkjRM67djVNjz7L2QgqmEIQunAP0+tzZj0Wp78uuY3p7QWZL+wbZXJkt80eCPYhIJIawIDAQAB",
    "manifest_version": 2,
    "name": "FunimationFeatures",
    "version": "1.0",

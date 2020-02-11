@@ -53,7 +53,7 @@
 
 				document.getElementsByClassName("video-player-container")[0].style.maxHeight = height + "px";
 				document.getElementsByClassName("video-player-section")[0].getElementsByClassName("container")[0].style.maxWidth =
-					document.getElementsByClassName("video-player-container")[0].style.maxWidth = ((16 / 9) * (height)) + "px";
+				document.getElementsByClassName("video-player-container")[0].style.maxWidth = ((16 / 9) * (height)) + "px";
 			}catch(err){}
 		}
 
