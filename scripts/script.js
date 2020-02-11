@@ -1,8 +1,13 @@
+// This code is based on FunimationFix by Bitter Buffalo
+// https://chrome.google.com/webstore/detail/funimationfix/ocngipibkfmmjmjpoeeiiaofeeclmlik?hl=en
+
+// FunimationFeatures is has been updated and expanded on by Alex Schumaker. https://github.com/alexschumaker/FunimationFeatures
+
 (function() {
-	var version = "0.2.1";
+	var version = "1.0";
 
 	if(window.top == window) {
-		console.log("Funimation Fix Activate!!", version);
+		console.log("FunimationFeatures version "+version+" loaded.");
 
 		// DARK MODE STYLES
 		var darkmode = document.createElement('style')
@@ -37,6 +42,7 @@
 
 		document.getElementsByTagName('head')[0].appendChild(darkmode)
 
+		// resizing function realized by Bitter Buffalo.
 		function setSize() {
 			try{
 				console.log("resize", window.innerHeight);
@@ -51,24 +57,14 @@
 			}catch(err){}
 		}
 
-		window.addEventListener("load", function() {
-			var script = document.createElement("script");
-			script.src = chrome.runtime.getURL("scripts/inject2.js");
-			document.getElementsByTagName('head')[0].appendChild(script);
-		});
-
 		window.addEventListener("resize", setSize);
 		setSize();
-	}
+	}	
 
-	function initPlayer() {
-		console.log("FunFix Player Load");
+	window.addEventListener("load", function() {
 		var script = document.createElement("script");
-			script.src = chrome.runtime.getURL("scripts/inject.js");
+		script.src = chrome.runtime.getURL("scripts/inject.js");
 		document.getElementsByTagName('head')[0].appendChild(script);
-	}
+	});
 
-	if(window.location.href.indexOf("player") > 0) {
-		window.addEventListener("load", initPlayer);
-	}
 })();

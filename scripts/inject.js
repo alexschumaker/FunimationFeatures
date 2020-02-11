@@ -1,22 +1,116 @@
+// Functionality for when the video player is focused.
+
 (function() {
-	var videoPlayer;
+	// Find out if we're running this on the video player iframe or on the rest of the page
+	// then set these variables according to scope
+	var playerFocus = false
+	var videoPlayer
+	var playerDoc
+	if (window.location.href.indexOf("player") > 0) {
+		playerFocus = true
+		videoPlayer = document.getElementsByTagName("video")[0]
+		playerDoc = document
+	}
+	else {
+		videoPlayer = document.getElementById('player').contentDocument.getElementsByTagName('video')[0]
+		playerDoc = document.getElementById('player').contentDocument
+	}
+
+	console.log("Injected FunimationFeatures into " + (playerFocus ? "player." : "page."))
+
+	// Block adblock i guess? this was something from FunimationFix that I am leaving in 
+	// even though I don't know what it does exactly...
 	window.BlockAdBlock = function(data){
 		function onDetected(){}
 		function onNotDetected(){}
 		function check(){}
 	};
 
-	function initInject() {
-		console.log("Funimation Fix Injected");	
-		var videos = document.getElementsByTagName("video");
+	// add keybinds!
+	$(document).keydown(function(e) {
+		// e.preventDefault();
+		// try{e.stopPropagation();}catch(err){}
 
-		if(videos.length > 0) {
-			videoPlayer = videos[0];
-			initControls();
+		switch (e.which) {
+			case 37: // left arrow
+				if (!(e.metaKey || e.shiftKey)) {
+					// $('#funimation-control-back').trigger('click');
+					videoPlayer.currentTime = videoPlayer.currentTime - 5
+				}
+				break;
+			case 38: // shift/meta + up arrow
+				if(e.shiftKey || e.metaKey) {
+					speedControl(true);
+				}
+				else if (videoPlayer.volume < 1) {
+					e.preventDefault();
+					videoPlayer.volume = videoPlayer.volume + .1
+				}
+				break;
+			case 39: // right arrow
+				if (!(e.metaKey || e.ctrlKey)) {
+					// $('#funimation-control-forward').trigger('click');
+					videoPlayer.currentTime = videoPlayer.currentTime + 5
+				}
+				break;
+			case 40: // shift/meta + down arrow
+				if(e.shiftKey || e.metaKey) {
+					speedControl(false);
+				}
+				else if (videoPlayer.volume > 0) {
+					e.preventDefault();
+					videoPlayer.volume = videoPlayer.volume - .1
+				}
+				break;
+			case 83: // s key
+				if (!e.metaKey || e.shiftKey) {
+					videoPlayer.currentTime = videoPlayer.currentTime + 82
+				}
+			case 32:  // spacebar
+				if (!playerFocus && (!e.metaKey || e.ctrlKey)) {
+					e.preventDefault();
+					// videoPlayer.paused ? videoPlayer.play() : videoPlayer.pause()
+					playerDoc.getElementById('funimation-control-playback').click()
+				}
+				break;
+			case 48: // shift/meta + 0
+				if(e.shiftKey || e.metaKey) {
+					videoPlayer.playbackRate = 1;
+					videoPlayer.playbackDisplay.innerHTML = "<span>" + videoPlayer.playbackRate + "</span>";
+				}
+				break;
+			case 70: // F
+				playerDoc.getElementById('funimation-control-fullscreen').click()
+				break;
+			default:
+				break;
+			}
+	});
+
+	function speedControl(up) {
+		if (up) {
+			if (videoPlayer.playbackRate < 4) {
+				videoPlayer.playbackRate = videoPlayer.playbackRate + .25
+			}
 		}
+		else {
+			if (videoPlayer.playbackRate > .25) {
+				videoPlayer.playbackRate = videoPlayer.playbackRate - .25
+			}
+		}
+
+		videoPlayer.playbackDisplay.innerHTML = "<span>" + videoPlayer.playbackRate + "</span>";
 	}
 
-	function initControls() {
+	//////////////////////////////////////////////////////////////////////////////////////////////////
+	// VideoPlayer-only functions (stuff that doesn't need to be run on other sections of the page) //
+	//////////////////////////////////////////////////////////////////////////////////////////////////
+	if (playerFocus) {
+		initUI();
+	}
+
+	// this is some really nice ui code from the original FunimationFix!
+	function initUI() {
 		if(document.getElementsByClassName("funimation-controls-right").length > 0) {
 			var playback = document.createElement("div");
 				playback.id = "playback";
@@ -37,59 +131,21 @@
 			videoPlayer.currentTimeDisplay = currentTime;
 
 			initListener();
-		} else setTimeout(initControls, 100);
+
+		} else setTimeout(initUI, 100);
 	}
 
+	var lastClickTime = 0
 	function initListener() {
 		videoPlayer.addEventListener("timeupdate", timeUpdate);
 
-		$(document).keydown(function(e) {
-			// console.log(e.which)
-			// e.preventDefault();
-			// try{e.stopPropagation();}catch(err){}
-			switch (e.which) {
-				case 37: // left arrow
-					if (!(e.metaKey || e.ctrlKey)) {
-						// $('#funimation-control-back').trigger('click');
-						videoPlayer.currentTime = videoPlayer.currentTime - 5
-					}
-					break;
-				case 38: // ctrl/meta + up arrow
-					if(e.ctrlKey || e.metaKey) {
-						increaseRate();
-					}
-					break;
-				case 39: // right arrow
-					if (!(e.metaKey || e.ctrlKey)) {
-						// $('#funimation-control-forward').trigger('click');
-						videoPlayer.currentTime = videoPlayer.currentTime + 5
-					}
-					break;
-				case 40: // ctrl/meta + down arrow
-					if(e.ctrlKey || e.metaKey) {
-						decreaseRate();
-					}
-					break;
-				case 83: // s key
-					if (!e.metaKey || e.ctrlKey) {
-						videoPlayer.currentTime = videoPlayer.currentTime + 82
-					}
-				case 48: // ctrl/meta + 0
-					if(e.ctrlKey || e.metaKey) {
-						videoPlayer.playbackRate = 1;
-						videoPlayer.playbackDisplay.innerHTML = "<span>" + videoPlayer.playbackRate + "</span>";
-						console.log("FuniFix Rate Reset", videoPlayer.playbackRate);
-					}
-					break;
-				case 70: // F
-					$('#funimation-control-fullscreen').trigger('click');
-					break;
-				default:
-					break;
-			}
-		});
-
 		$("#funimation-gradient, video").on("click", function(){
+			var thisClickTime = new Date().getTime();
+			if (thisClickTime - lastClickTime < 400) {
+				playerDoc.getElementById('funimation-control-fullscreen').click()
+			}
+
+			lastClickTime = thisClickTime
 			$('#funimation-control-playback').click();
 		});
 	}
@@ -105,73 +161,4 @@
 		var minutes = parseInt((time / 60) % 60);
 		return  minutes + ":" + (seconds < 10 ? "0":"") + seconds;
 	}
-
-	function increaseRate() {
-		if(videoPlayer.playbackRate < .25)
-			videoPlayer.playbackRate = .25;
-		else if(videoPlayer.playbackRate < .5)
-			videoPlayer.playbackRate = .5;
-		else if(videoPlayer.playbackRate < .75)
-			videoPlayer.playbackRate = .75;
-		else if(videoPlayer.playbackRate < 1)
-			videoPlayer.playbackRate = 1;
-		else if(videoPlayer.playbackRate < 1.25)
-			videoPlayer.playbackRate = 1.25;
-		else if(videoPlayer.playbackRate < 1.5)
-			videoPlayer.playbackRate = 1.5;
-		else if(videoPlayer.playbackRate < 2)
-			videoPlayer.playbackRate = 2;
-		else if(videoPlayer.playbackRate < 4)
-			videoPlayer.playbackRate = 4;
-		else if(videoPlayer.playbackRate < 6)
-			videoPlayer.playbackRate = 6;
-		console.log("FuniFix Rate Up", videoPlayer.playbackRate);
-
-		videoPlayer.playbackDisplay.innerHTML = "<span>" + videoPlayer.playbackRate + "</span>";
-		if($('#funimation-popover-volume input').val() < 1)
-			setTimeout(() => $('#funimation-popover-volume input').val(parseFloat($('#funimation-popover-volume input').val()) - 0.1).change());
-	}
-
-	function decreaseRate() {
-		if(videoPlayer.playbackRate > 4)
-			videoPlayer.playbackRate = 4;
-		else if(videoPlayer.playbackRate > 2)
-			videoPlayer.playbackRate = 2;
-		else if(videoPlayer.playbackRate > 1.5)
-			videoPlayer.playbackRate = 1.5;
-		else if(videoPlayer.playbackRate > 1.25)
-			videoPlayer.playbackRate = 1.25;
-		else if(videoPlayer.playbackRate > 1)
-			videoPlayer.playbackRate = 1;
-		else if(videoPlayer.playbackRate > .75)
-			videoPlayer.playbackRate = .75;
-		else if(videoPlayer.playbackRate > .5)
-			videoPlayer.playbackRate = .5;
-		else if(videoPlayer.playbackRate > .25)
-			videoPlayer.playbackRate = .25;
-		console.log("FuniFix Rate Down", videoPlayer.playbackRate);
-
-		videoPlayer.playbackDisplay.innerHTML = "<span>" + videoPlayer.playbackRate + "</span>";
-
-		if($('#funimation-popover-volume input').val() > 0)
-			setTimeout(() => $('#funimation-popover-volume input').val(parseFloat($('#funimation-popover-volume input').val()) + 0.1).change());
-	}
-
-	/*function playerFunctionInvocation(invoke){
-		console.log("Invoke", invoke);
-		if(fun != "toggleVideoPlayback")
-			fp[invoke]();
-		else $('#funimation-control-playback').click();
-	}
-
-	window.addEventListener("message", function(event) {
-		if (event.source != window)
-			return;
-		if (event.data.type && (event.data.type == "PLAYER_INVOCATION")) {
-			//console.log("Content script received: " + event.data.text);
-			playerFunctionInvocation(event.data.text)
-		}
-	}, false);*/
-
-	initInject();
 })();
