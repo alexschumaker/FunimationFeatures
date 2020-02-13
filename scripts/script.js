@@ -4,14 +4,26 @@
 // FunimationFeatures is has been updated and expanded on by Alex Schumaker. https://github.com/alexschumaker/FunimationFeatures
 
 (function() {
-	var version = "1.0";
-
 	if(window.top == window) {
 		console.log("FunimationFeatures version "+version+" loaded.");
+
+		var version = "1.0";
+
+		chrome.runtime.onMessage.addListener(function(msg, sender, response) {
+			if (msg.from === "FFBackground" && msg.subject === "toggle") {
+				toggleDarkMode()
+			}
+		});
+
+		chrome.runtime.sendMessage({
+			from: 'content',
+			subject: 'showPageAction'
+		});
 
 		// DARK MODE STYLES
 		var darkmode = document.createElement('style')
 		darkmode.type = 'text/css'
+		darkmode.id = 'FFDark'
 		darkmode.appendChild(document.createTextNode(
 				`body, .panel-title {
 					background: #1b1b1b;
@@ -40,7 +52,12 @@
 				}`
 			))
 
-		document.getElementsByTagName('head')[0].appendChild(darkmode)
+		if (window.localStorage.getItem('FFDarkEnabled') === "true") {
+			document.getElementsByTagName('head')[0].appendChild(darkmode)
+		}
+		else if (window.localStorage.getItem('FFDarkEnabled') === null) {
+			toggleDarkMode()
+		}
 
 		// resizing function realized by Bitter Buffalo.
 		function setSize() {
@@ -59,7 +76,18 @@
 
 		window.addEventListener("resize", setSize);
 		setSize();
-	}	
+
+		function toggleDarkMode() {
+			if (document.getElementById('FFDark') === null) {
+				document.getElementsByTagName('head')[0].appendChild(darkmode)
+				window.localStorage.setItem('FFDarkEnabled', "true")
+			}
+			else {
+				document.getElementsByTagName('head')[0].removeChild(document.getElementById('FFDark'))
+				window.localStorage.setItem('FFDarkEnabled', "false")
+			}
+		}
+	}
 
 	window.addEventListener("load", function() {
 		var script = document.createElement("script");
