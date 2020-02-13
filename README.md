@@ -14,4 +14,4 @@ Chrome Extension that adds convenient features to Funimation's lackluster video 
   - You can now **click** the screen to play/pause and **double click** to toggle fullscreen!
   - Basically, stuff that is standard in literally every video player on earth except for Funimation's.
   
-- Dark Mode; Currently not toggleable, only on video pages...
+- Dark Mode for video pages. Click the extension toolbar icon to toggle!
