@@ -11,7 +11,7 @@
 		videoPlayer = document.getElementsByTagName("video")[0]
 		playerDoc = document
 	}
-	else {
+	else if (document.getElementById('player')) {
 		videoPlayer = document.getElementById('player').contentDocument.getElementsByTagName('video')[0]
 		playerDoc = document.getElementById('player').contentDocument
 	}
@@ -27,66 +27,68 @@
 	};
 
 	// add keybinds!
-	$(document).keydown(function(e) {
-		// e.preventDefault();
-		// try{e.stopPropagation();}catch(err){}
+	if (videoPlayer !== null) {
+		$(document).keydown(function(e) {
+			// e.preventDefault();
+			// try{e.stopPropagation();}catch(err){}
 
-		switch (e.which) {
-			case 37: // left arrow
-				if (!(e.metaKey || e.shiftKey)) {
-					// $('#funimation-control-back').trigger('click');
-					videoPlayer.currentTime = videoPlayer.currentTime - 5
+			switch (e.which) {
+				case 37: // left arrow
+					if (!(e.metaKey || e.shiftKey)) {
+						// $('#funimation-control-back').trigger('click');
+						videoPlayer.currentTime = videoPlayer.currentTime - 5
+					}
+					break;
+				case 38: // shift/meta + up arrow
+					if(e.shiftKey || e.metaKey) {
+						speedControl(true);
+					}
+					else if (videoPlayer.volume < 1) {
+						e.preventDefault();
+						videoPlayer.volume = videoPlayer.volume + .1
+					}
+					break;
+				case 39: // right arrow
+					if (!(e.metaKey || e.ctrlKey)) {
+						// $('#funimation-control-forward').trigger('click');
+						videoPlayer.currentTime = videoPlayer.currentTime + 5
+					}
+					break;
+				case 40: // shift/meta + down arrow
+					if(e.shiftKey || e.metaKey) {
+						speedControl(false);
+					}
+					else if (videoPlayer.volume > 0) {
+						e.preventDefault();
+						videoPlayer.volume = videoPlayer.volume - .1
+					}
+					break;
+				case 83: // s key
+					if (!e.metaKey || e.shiftKey) {
+						videoPlayer.currentTime = videoPlayer.currentTime + 82
+					}
+					break;
+				case 32:  // spacebar
+					if (!playerFocus && (!e.metaKey || e.ctrlKey)) {
+						e.preventDefault();
+						// videoPlayer.paused ? videoPlayer.play() : videoPlayer.pause()
+						playerDoc.getElementById('funimation-control-playback').click()
+					}
+					break;
+				case 48: // shift/meta + 0
+					if(e.shiftKey || e.metaKey) {
+						videoPlayer.playbackRate = 1;
+						videoPlayer.playbackDisplay.innerHTML = "<span>" + videoPlayer.playbackRate + "</span>";
+					}
+					break;
+				case 70: // F
+					playerDoc.getElementById('funimation-control-fullscreen').click()
+					break;
+				default:
+					break;
 				}
-				break;
-			case 38: // shift/meta + up arrow
-				if(e.shiftKey || e.metaKey) {
-					speedControl(true);
-				}
-				else if (videoPlayer.volume < 1) {
-					e.preventDefault();
-					videoPlayer.volume = videoPlayer.volume + .1
-				}
-				break;
-			case 39: // right arrow
-				if (!(e.metaKey || e.ctrlKey)) {
-					// $('#funimation-control-forward').trigger('click');
-					videoPlayer.currentTime = videoPlayer.currentTime + 5
-				}
-				break;
-			case 40: // shift/meta + down arrow
-				if(e.shiftKey || e.metaKey) {
-					speedControl(false);
-				}
-				else if (videoPlayer.volume > 0) {
-					e.preventDefault();
-					videoPlayer.volume = videoPlayer.volume - .1
-				}
-				break;
-			case 83: // s key
-				if (!e.metaKey || e.shiftKey) {
-					videoPlayer.currentTime = videoPlayer.currentTime + 82
-				}
-				break;
-			case 32:  // spacebar
-				if (!playerFocus && (!e.metaKey || e.ctrlKey)) {
-					e.preventDefault();
-					// videoPlayer.paused ? videoPlayer.play() : videoPlayer.pause()
-					playerDoc.getElementById('funimation-control-playback').click()
-				}
-				break;
-			case 48: // shift/meta + 0
-				if(e.shiftKey || e.metaKey) {
-					videoPlayer.playbackRate = 1;
-					videoPlayer.playbackDisplay.innerHTML = "<span>" + videoPlayer.playbackRate + "</span>";
-				}
-				break;
-			case 70: // F
-				playerDoc.getElementById('funimation-control-fullscreen').click()
-				break;
-			default:
-				break;
-			}
-	});
+		});
+	}
 
 	function speedControl(up) {
 		if (up) {

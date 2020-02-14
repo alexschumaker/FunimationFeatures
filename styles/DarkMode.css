@@ -1,0 +1,25 @@
+body, .panel-title {
+	background: #1b1b1b;
+	color: white;
+}
+
+.panel {
+	background: #1b1b1b;
+}
+
+header {
+	background: darkgray;
+	box-shadow: 0px 10px 30px black;
+}
+
+a {
+	color: darkgray;
+}
+
+#comments-section a:hover {
+	color: #e30046;
+}
+
+#comments-section a {
+	background: #1b1b1b;
+}
