@@ -1,7 +1,7 @@
 // This code is based on FunimationFix by Bitter Buffalo
 // https://chrome.google.com/webstore/detail/funimationfix/ocngipibkfmmjmjpoeeiiaofeeclmlik?hl=en
 
-// FunimationFeatures is has been updated and expanded on by Alex Schumaker. https://github.com/alexschumaker/FunimationFeatures
+// FunimationFeatures has been updated and expanded on by Alex Schumaker. https://github.com/alexschumaker/FunimationFeatures
 
 (function() {
 	if(window.top == window) {
@@ -52,12 +52,12 @@
 				}`
 			))
 
-		if (window.localStorage.getItem('FFDarkEnabled') === "true") {
-			document.getElementsByTagName('head')[0].appendChild(darkmode)
-		}
-		else if (window.localStorage.getItem('FFDarkEnabled') === null) {
-			toggleDarkMode()
-		}
+		// if (window.localStorage.getItem('FFDarkEnabled') === "true") {
+		// 	document.getElementsByTagName('head')[0].appendChild(darkmode)
+		// }
+		// else if (window.localStorage.getItem('FFDarkEnabled') === null) {
+		// 	toggleDarkMode()
+		// }
 
 		// resizing function realized by Bitter Buffalo.
 		function setSize() {
