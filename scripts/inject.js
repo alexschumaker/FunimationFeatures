@@ -18,14 +18,6 @@
 
 	console.log("Injected FunimationFeatures into " + (playerFocus ? "player." : "page."))
 
-	// Block adblock i guess? this was something from FunimationFix that I am leaving in 
-	// even though I don't know what it does exactly...
-	window.BlockAdBlock = function(data){
-		function onDetected(){}
-		function onNotDetected(){}
-		function check(){}
-	};
-
 	// add keybinds!
 	$(document).keydown(function(e) {
 		// e.preventDefault();

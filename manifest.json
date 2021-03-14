@@ -16,7 +16,7 @@
          "matches": [ "https://www.funimation.com/shows/*", "http://www.funimation.com/shows/*", "https://www.funimation.com/player/*", "http://www.funimation.com/player/*" ]
       },
       {
-         // "css": [ "styles/DarkMode.css" ],
+          "css": [ "styles/DarkMode.css" ],
          "js": [ "scripts/DarkMode.js"],
          "matches": [ "https://www.funimation.com/*" ],
          "run_at": "document_end"
@@ -32,11 +32,10 @@
    },
    "manifest_version": 2,
    "name": "FunimationFeatures",
-   "version": "1.0",
+   "version": "1.1",
    "web_accessible_resources": [ "scripts/inject.js" ],
    "permissions":[
       "tabs",
-      "declarativeContent",
       "storage"
    ]
 }
