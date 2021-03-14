@@ -13,11 +13,11 @@
          "all_frames": true,
          "css": [ "styles/style.css" ],
          "js": [ "scripts/script.js" ],
-         "matches": [ "https://www.funimation.com/shows/*", "https://www.funimation.com/player/*"]
+         "matches": [ "*://*.funimation.com/shows/*", "*://*.funimation.com/player/*"]
       },
       {
          "js": [ "scripts/DarkMode.js"],
-         "matches": [ "https://www.funimation.com/*" ],
+         "matches": [ "*://*.funimation.com/*" ],
          "run_at": "document_end"
       }
    ],
