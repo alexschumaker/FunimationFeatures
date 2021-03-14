@@ -1,5 +1,5 @@
 {
-   "author": "Bitter Buffalo, Alex Schumaker",
+   "author": "Bitter Buffalo, Alex Schumaker, Tom Grant",
    "page_action": {
       "default_icon": "images/icon_16.png",
       "default_title": "Toggle Dark Mode"
@@ -22,7 +22,6 @@
       }
    ],
    "description": "Successor to FunimationFix by Bitter Buffalo. Brings essential keybinds to Funimation's lackluster player, DarkMode style to video pages, and auto-resizing",
-   "homepage_url": "http://www.cobblers.net/#software",
    "icons": {
       "128": "images/icon_128.png",
       "16": "images/icon_16.png",
