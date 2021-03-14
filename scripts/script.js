@@ -89,10 +89,8 @@
 		}
 	}
 
-	window.addEventListener("load", function() {
-		var script = document.createElement("script");
-		script.src = chrome.runtime.getURL("scripts/inject.js");
-		document.getElementsByTagName('head')[0].appendChild(script);
-	});
+	var script = document.createElement("script");
+	script.src = chrome.runtime.getURL("scripts/inject.js");
+	document.getElementsByTagName('head')[0].appendChild(script);
 
 })();

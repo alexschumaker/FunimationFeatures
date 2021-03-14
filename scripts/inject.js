@@ -18,16 +18,8 @@
 
 	console.log("Injected FunimationFeatures into " + (playerFocus ? "player." : "page."))
 
-	// Block adblock i guess? this was something from FunimationFix that I am leaving in 
-	// even though I don't know what it does exactly...
-	window.BlockAdBlock = function(data){
-		function onDetected(){}
-		function onNotDetected(){}
-		function check(){}
-	};
-
 	// add keybinds!
-	$(document).keydown(function(e) {
+	document.addEventListener("keydown", function(e) {
 		// e.preventDefault();
 		// try{e.stopPropagation();}catch(err){}
 
@@ -110,6 +102,18 @@
 		initUI();
 	}
 
+	// Video player clicked
+	var lastClickTime = 0;
+	function playerClicked(e)
+	{
+		var thisClickTime = new Date().getTime();
+		if (thisClickTime - lastClickTime < 400)
+			playerDoc.getElementById('funimation-control-fullscreen').click();
+
+		lastClickTime = thisClickTime;
+		playerDoc.getElementById('funimation-control-playback').click();
+	}
+
 	// this is some really nice ui code from the original FunimationFix!
 	function initUI() {
 		if(document.getElementsByClassName("funimation-controls-right").length > 0) {
@@ -136,19 +140,10 @@
 		} else setTimeout(initUI, 100);
 	}
 
-	var lastClickTime = 0
 	function initListener() {
 		videoPlayer.addEventListener("timeupdate", timeUpdate);
-
-		$("#funimation-gradient, video").on("click", function(){
-			var thisClickTime = new Date().getTime();
-			if (thisClickTime - lastClickTime < 400) {
-				playerDoc.getElementById('funimation-control-fullscreen').click()
-			}
-
-			lastClickTime = thisClickTime
-			$('#funimation-control-playback').click();
-		});
+		document.getElementById("funimation-gradient").addEventListener("click", playerClicked);
+		videoPlayer.addEventListener("click", playerClicked);
 	}
 
 	function timeUpdate(e) {

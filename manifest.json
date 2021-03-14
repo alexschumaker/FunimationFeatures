@@ -1,5 +1,5 @@
 {
-   "author": "Bitter Buffalo, Alex Schumaker",
+   "author": "Bitter Buffalo, Alex Schumaker, Tom Grant",
    "page_action": {
       "default_icon": "images/icon_16.png",
       "default_title": "Toggle Dark Mode"
@@ -13,17 +13,15 @@
          "all_frames": true,
          "css": [ "styles/style.css" ],
          "js": [ "scripts/script.js" ],
-         "matches": [ "https://www.funimation.com/shows/*", "http://www.funimation.com/shows/*", "https://www.funimation.com/player/*", "http://www.funimation.com/player/*" ]
+         "matches": [ "*://*.funimation.com/shows/*", "*://*.funimation.com/player/*"]
       },
       {
-         // "css": [ "styles/DarkMode.css" ],
          "js": [ "scripts/DarkMode.js"],
-         "matches": [ "https://www.funimation.com/*" ],
+         "matches": [ "*://*.funimation.com/*" ],
          "run_at": "document_end"
       }
    ],
    "description": "Successor to FunimationFix by Bitter Buffalo. Brings essential keybinds to Funimation's lackluster player, DarkMode style to video pages, and auto-resizing",
-   "homepage_url": "http://www.cobblers.net/#software",
    "icons": {
       "128": "images/icon_128.png",
       "16": "images/icon_16.png",
@@ -32,11 +30,10 @@
    },
    "manifest_version": 2,
    "name": "FunimationFeatures",
-   "version": "1.0",
+   "version": "1.1",
    "web_accessible_resources": [ "scripts/inject.js" ],
    "permissions":[
       "tabs",
-      "declarativeContent",
       "storage"
    ]
 }
